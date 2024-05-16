@@ -7,21 +7,23 @@ const App = () => {
   const { name, job, image, text } = people[index];
 
   const nextPerson = () => {
-    if (index + 1 < people.length)
-      setIndex((currIdx) => {
-        let newIdx = currIdx + 1;
-        if (newIdx > people.length - 1) return 0;
-        return newIdx;
-      });
+    setIndex((currIdx) => {
+      let newIdx = (currIdx + 1) % people.length;
+      return newIdx;
+    });
   };
 
   const prevPerson = () => {
-    if (index - 1 >= 0)
-      setIndex((currIdx) => {
-        let newIdx = currIdx - 1;
-        if (newIdx < 0) return people.length - 1;
-        return newIdx;
-      });
+    setIndex((currIdx) => {
+      let newIdx = (currIdx - 1 + people.length) % people.length;
+      return newIdx;
+    });
+  };
+
+  const randomPerson = () => {
+    let randomNumber = Math.floor(Math.random() * people.length);
+    const newIdx = randomNumber % people.length;
+    setIndex(newIdx);
   };
 
   return (
@@ -44,6 +46,9 @@ const App = () => {
             <FaChevronRight></FaChevronRight>
           </button>
         </div>
+        <button className="btn btn-hipster" onClick={randomPerson}>
+          surprise me
+        </button>
       </article>
     </main>
   );
